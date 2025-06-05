@@ -12,7 +12,7 @@ const LoginSignUp = () => {
         <div className="bg-black absolute inset-0 opacity-50 w-full "></div>
         <img src={loginBg} className="w-full" alt="Netflix Background" />
       </div>
-      <div className="bg-black/80 w-[460px] absolute top-1/2 left-1/2 transform -translate-x-1/2">
+      <div className="bg-black/80 w-[500px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded">
         <SignForm />
       </div>
     </div>
