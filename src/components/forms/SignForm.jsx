@@ -7,12 +7,14 @@ import Input from "./Input";
 import { checkValidInput } from "../../utils/validField";
 import { auth } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
 
 const SignForm = () => {
   const [isLogginPage, SetIsLogginPage] = useState(true);
   const [error, setError] = useState();
   const navigate = useNavigate();
 
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
@@ -22,6 +24,7 @@ const SignForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const nameValue = name.current?.value;
     const emailValue = email.current?.value;
     const passwordValue = password.current?.value;
     const message = checkValidInput(emailValue, passwordValue);
@@ -29,24 +32,6 @@ const SignForm = () => {
 
     if (message) return;
     if (!isLogginPage) {
-      createUserWithEmailAndPassword(auth, emailValue, passwordValue)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          navigate("/browse");
-        })
-        .catch((error) => {
-          setError("Authentication failed. Please check your credentials.");
-        });
-    } else {
-      signInWithEmailAndPassword(auth, emailValue, passwordValue)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          navigate("/browse");
-        })
-        .catch((error) => {
-          setError("Authentication failed. Please check your credentials.");
-        });
     }
   };
 
@@ -58,7 +43,9 @@ const SignForm = () => {
       <h2 className="text-white text-4xl mb-4 font-semibold">
         {isLogginPage ? "Sign In" : "Sign Up"}
       </h2>
-      {!isLogginPage && <Input type="text" placeholder="Your Name" />}
+      {!isLogginPage && (
+        <Input type="text" placeholder="Your Name" ref={name} />
+      )}
       <Input type="text" placeholder="Email" ref={email} />
       <Input type="password" placeholder="Password" ref={password} />
       {error && <p className="text-red-600 text-xl"> {error}</p>}

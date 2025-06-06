@@ -2,8 +2,6 @@ import React from "react";
 
 const Input = React.forwardRef((props, ref) => {
   const { type, placeholder } = props;
-  console.log(ref);
-
   return (
     <input
       type={type}
