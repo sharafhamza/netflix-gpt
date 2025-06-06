@@ -1,9 +1,12 @@
-export const checkInput = (email, password) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/
-      .password;
-  if (!emailRegex) return "Please enter a valid email";
-  if (!passwordRegex) return "Please put minimum 8 character";
+export const checkValidInput = (email, password) => {
+  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
+    email
+  );
+  const isPasswordValid =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password);
+
+  if (!isEmailValid) return "Email ID is not valid";
+  if (!isPasswordValid) return "Password is not valid";
+
   return null;
 };

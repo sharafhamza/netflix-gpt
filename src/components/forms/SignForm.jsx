@@ -1,9 +1,17 @@
 import React, { useRef, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import Input from "./Input";
-import { checkInput } from "../../utils/validField";
+import { checkValidInput } from "../../utils/validField";
+import { auth } from "../../utils/firebase";
+import { useNavigate } from "react-router-dom";
+
 const SignForm = () => {
   const [isLogginPage, SetIsLogginPage] = useState(true);
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const email = useRef(null);
   const password = useRef(null);
@@ -14,8 +22,32 @@ const SignForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = checkInput(email.current.value, password.current.value);
+    const emailValue = email.current?.value;
+    const passwordValue = password.current?.value;
+    const message = checkValidInput(emailValue, passwordValue);
     setError(message);
+
+    if (message) return;
+    if (!isLogginPage) {
+      createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigate("/browse");
+        })
+        .catch((error) => {
+          setError("Authentication failed. Please check your credentials.");
+        });
+    } else {
+      signInWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          navigate("/browse");
+        })
+        .catch((error) => {
+          setError("Authentication failed. Please check your credentials.");
+        });
+    }
   };
 
   return (
@@ -34,7 +66,7 @@ const SignForm = () => {
         type="submit"
         className="text-white cursor-pointer bg-red-600 w-full py-2 text-xl font-semibold rounded-md"
       >
-        Sign In
+        {isLogginPage ? "Sign in" : "Sign Up"}
       </button>
       <p className="text-gray-300 text-xl ">
         {isLogginPage ? "New to Netflix?" : "Already have an account"}
