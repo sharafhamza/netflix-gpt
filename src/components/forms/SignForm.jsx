@@ -8,12 +8,15 @@ import { checkValidInput } from "../../utils/validField";
 import { auth } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/redux/userSlice";
 
 const SignForm = () => {
   const [isLogginPage, SetIsLogginPage] = useState(true);
   const [error, setError] = useState();
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -34,18 +37,34 @@ const SignForm = () => {
     if (!isLogginPage) {
       createUserWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
-          navigate("/browse");
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: nameValue,
+            photoURL: "https://avatars.githubusercontent.com/u/138650808?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
           setError("User already signed in");
         });
     } else {
       signInWithEmailAndPassword(auth, emailValue, passwordValue)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
           navigate("/browse");
         })
         .catch((error) => {

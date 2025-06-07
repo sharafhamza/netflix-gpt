@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
+  console.log(user?.displayName);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -26,17 +27,17 @@ const Header = () => {
 
       {/* User Profile + Sign Out */}
       <div className="flex items-center gap-4">
-        {user?.photoURL ? (
+        {user?.photoURL && (
           <img
-            src={user.photoURL}
+            src={user?.photoURL}
             alt="User Profile"
             className="w-10 h-10 rounded-full object-cover"
           />
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-white">
-            {user?.displayName?.charAt(0) || "U"}
-          </div>
         )}
+
+        <div className=" flex items-center justify-center text-sm font-semibold text-black">
+          {user?.displayName}
+        </div>
 
         <button
           onClick={handleSignOut}

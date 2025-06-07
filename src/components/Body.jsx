@@ -9,6 +9,26 @@ import { addUser, removeUser } from "../utils/redux/userSlice";
 
 const Body = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          addUser({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL, // ✅ This should be photoURL, not photoUrl
+          })
+        );
+      } else {
+        dispatch(removeUser());
+      }
+    });
+
+    // Clean up listener on unmount
+    return () => unsubscribe();
+  }, []);
+
   const appRouter = createBrowserRouter([
     {
       path: "/",
