@@ -1,4 +1,4 @@
-import { logo, loginBg } from "../utils/otherUrl";
+import { logo, loginBg } from "../utils/constants";
 import React from "react";
 import SignForm from "./forms/SignForm";
 const LoginSignUp = () => {

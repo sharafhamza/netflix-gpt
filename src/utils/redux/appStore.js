@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import moviesReducer from "./movieSlice";
+import { addNowPlayingMovies } from "./movieSlice";
+import movieReducer from "./movieSlice";
 import userReducer from "./userSlice";
 const appStore = configureStore({
   reducer: {
     user: userReducer,
-    movies: moviesReducer,
+    movies: movieReducer,
   },
 });
 
