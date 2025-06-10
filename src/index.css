@@ -3,3 +3,7 @@
 :root {
   --my-max-width: 1320px;
 }
+
+.gesrio-bold {
+  font-family: "Agbalumo", system-ui;
+}

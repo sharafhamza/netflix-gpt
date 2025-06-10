@@ -13,11 +13,9 @@ const Hero = () => {
   const { original_title, overview, id } = mainMovie;
 
   return (
-    <div className="bg-black">
-      <div className="max-w-7xl mx-auto px-6">
-        <VideoTitle title={original_title} overview={overview} />
-        <VideoBackground id={id} />
-      </div>
+    <div className="bg-black  overflow-hidden relative h-[700px] flex items-center">
+      <VideoTitle title={original_title} overview={overview} />
+      <VideoBackground id={id} />
     </div>
   );
 };

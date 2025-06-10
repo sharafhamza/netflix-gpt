@@ -21,8 +21,8 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full">
-      <div className="flex justify-between items-center max-w-screen-xl mx-auto p-4 ">
+    <div className="fixed z-10 top-0 left-0 w-full">
+      <div className="flex justify-between items-center mx-auto px-14 py-3">
         {/* Logo */}
         <img className="w-32" alt="Netflix logo" src={logo} />
 
@@ -36,13 +36,13 @@ const Header = () => {
             />
           )}
 
-          <div className=" flex items-center justify-center text-sm font-semibold text-black">
+          <div className=" flex items-center justify-center text-sm font-semibold text-white">
             {user?.displayName}
           </div>
 
           <button
             onClick={handleSignOut}
-            className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 text-sm sm:text-base font-semibold rounded-md transition duration-200"
+            className="text-white cursor-pointer bg-red-600 hover:bg-red-700 px-4 py-2 text-sm sm:text-base font-semibold rounded-md transition duration-200"
           >
             Sign Out
           </button>
