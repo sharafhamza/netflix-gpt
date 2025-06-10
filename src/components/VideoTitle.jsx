@@ -10,10 +10,10 @@ const VideoTitle = ({ title, overview }) => {
       </h2>
       <p className="text-md w-[600px] mb-4 text-gray-400">{overview}</p>
       <div className="my-4 md:m-0 flex">
-        <button className=" bg-white text-black gap-2 md:py-4 cursor-pointer px-3 md:px-12 text-xl font-semibold rounded-xl flex items-center backdrop-blur-md bg-opacity-50">
+        <button className=" bg-white text-black gap-2 md:py-4  cursor-pointer px-3 md:px-12 text-xl font-semibold rounded-full flex items-center backdrop-blur-md bg-opacity-50">
           <RiTriangleFill className="text-xl rotate-90" /> Play
         </button>
-        <button className="hidden md:flex items-center gap-2 cursor-pointer mx-2 bg-gray-500 text-white p-4 px-12 text-xl rounded-xl bg-opacity-50 backdrop-blur-lg">
+        <button className="hidden md:flex items-center gap-2 cursor-pointer mx-2 bg-gray-500/40 text-white p-4 px-12 text-xl rounded-full bg-opacity-50 backdrop-blur-lg">
           <FaCircleInfo className="text-xl" /> More Info
         </button>
       </div>

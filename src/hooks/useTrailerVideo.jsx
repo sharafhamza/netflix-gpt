@@ -25,7 +25,7 @@ const useTrailerVideo = async (movieId) => {
   };
 
   useEffect(() => {
-    getVideo();
+    !trailerVideo && getVideo();
   });
 };
 
