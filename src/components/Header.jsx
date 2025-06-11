@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { logo } from "../utils/constants";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -8,7 +8,15 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
-  console.log(user?.displayName);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -21,7 +29,13 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed z-10 top-0 left-0 w-full">
+    <div
+      className={`fixed z-99 top-0 left-0 w-full ${
+        isScrolled
+          ? "bg-gray-800/70 backdrop-blur-md shadow-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="flex justify-between items-center mx-auto px-14 py-3">
         {/* Logo */}
         <img className="w-32" alt="Netflix logo" src={logo} />

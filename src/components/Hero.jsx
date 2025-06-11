@@ -1,15 +1,21 @@
 import React from "react";
 import useAddNowPlaying from "../hooks/useAddNowPlaying";
+import usePopulerMovies from "../hooks/usePopulerMovies";
 import { useSelector } from "react-redux";
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackground";
+import useTopRatedMovies from "../hooks/useTopRatedMovies";
+import useUpComingMovies from "../hooks/useUpComingMovies";
 
 const Hero = () => {
   const movies = useSelector((store) => store.movies?.nowPlayingMovies);
   useAddNowPlaying();
+  usePopulerMovies();
+  useTopRatedMovies();
+  useUpComingMovies();
 
   if (!movies) return;
-  const mainMovie = movies[0];
+  const mainMovie = movies[9];
   const { original_title, overview, id } = mainMovie;
 
   return (
