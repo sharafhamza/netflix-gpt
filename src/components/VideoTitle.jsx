@@ -4,7 +4,7 @@ import { RiTriangleFill } from "react-icons/ri";
 
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="text-whit  w-screen text-white aspect-video pt-[20%] px-14 absolute bg-gradient-to-r from-black">
+    <div className="text-whit  w-screen text-white aspect-video pt-[20%] px-14 absolute bg-gradient-to-r from-black/40">
       <h2 className="text-2xl md:text-6xl font-bold py-3 gesrio-bold">
         {title}
       </h2>

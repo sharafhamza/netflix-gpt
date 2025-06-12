@@ -3,13 +3,14 @@ import { logo } from "../utils/constants";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleGptPage } from "../utils/redux/gptSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const isGptTrue = useSelector((store) => store.gpt.showGptSearch);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -28,6 +29,13 @@ const Header = () => {
       });
   };
 
+  const dispatch = useDispatch();
+  const handleGpt = () => {
+    dispatch(toggleGptPage());
+    if (isGptTrue) {
+      navigate("/gpt-page");
+    }
+  };
   return (
     <div
       className={`fixed z-99 top-0 left-0 w-full ${
@@ -54,6 +62,12 @@ const Header = () => {
             {user?.displayName}
           </div>
 
+          <button
+            onClick={handleGpt}
+            className="text-white cursor-pointer bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm sm:text-base font-semibold rounded-md transition duration-200"
+          >
+            GPT Search
+          </button>
           <button
             onClick={handleSignOut}
             className="text-white cursor-pointer bg-red-600 hover:bg-red-700 px-4 py-2 text-sm sm:text-base font-semibold rounded-md transition duration-200"

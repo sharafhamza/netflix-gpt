@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/redux/userSlice";
+import GptPage from "./GptPage";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const Body = () => {
     {
       path: "/browse",
       element: <Browse />,
+    },
+    {
+      path: "/gpt-page",
+      element: <GptPage />,
     },
   ]);
 
