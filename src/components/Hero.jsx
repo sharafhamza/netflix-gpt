@@ -13,9 +13,9 @@ const Hero = () => {
   usePopulerMovies();
   useTopRatedMovies();
   useUpComingMovies();
-
   if (!movies) return;
   const mainMovie = movies[14];
+
   const { original_title, overview, id } = mainMovie;
 
   return (

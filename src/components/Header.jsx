@@ -4,13 +4,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleGptPage } from "../utils/redux/gptSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const isGptTrue = useSelector((store) => store.gpt.showGptSearch);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -19,23 +19,20 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleGptSearch = () => {
+    navigate("/gpt-page");
+  };
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         navigate("/");
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/error");
       });
   };
 
-  const dispatch = useDispatch();
-  const handleGpt = () => {
-    dispatch(toggleGptPage());
-    if (isGptTrue) {
-      navigate("/gpt-page");
-    }
-  };
   return (
     <div
       className={`fixed z-99 top-0 left-0 w-full ${
@@ -45,25 +42,21 @@ const Header = () => {
       }`}
     >
       <div className="flex justify-between items-center mx-auto px-14 py-3">
-        {/* Logo */}
         <img className="w-32" alt="Netflix logo" src={logo} />
 
-        {/* User Profile + Sign Out */}
         <div className="flex items-center gap-4">
           {user?.photoURL && (
             <img
-              src={user?.photoURL}
+              src={user.photoURL}
               alt="User Profile"
               className="w-10 h-10 rounded-full object-cover"
             />
           )}
-
-          <div className=" flex items-center justify-center text-sm font-semibold text-white">
+          <div className="text-sm font-semibold text-white">
             {user?.displayName}
           </div>
-
           <button
-            onClick={handleGpt}
+            onClick={handleGptSearch}
             className="text-white cursor-pointer bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm sm:text-base font-semibold rounded-md transition duration-200"
           >
             GPT Search

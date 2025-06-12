@@ -4,12 +4,13 @@ import LoginSignUp from "./LoginSignUp";
 import Browse from "./Browse";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/redux/userSlice";
 import GptPage from "./GptPage";
 
 const Body = () => {
   const dispatch = useDispatch();
+  const isToggleGptPage = useSelector((store) => store.gpt.showGptSearch);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
